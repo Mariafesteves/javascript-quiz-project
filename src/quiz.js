@@ -12,7 +12,7 @@ class Quiz {
 
     moveToNextQuestion() {
         this.currentQuestionIndex++;
-    }  
+    } 
     
     shuffleQuestions(){
         for (let i= this.questions.length-1; i>0; i--){
@@ -23,14 +23,12 @@ class Quiz {
     }
 
     checkAnswer (answer){
-        if (answer === this.getQuestion().answer){
+        if (answer === this.questions[this.currentQuestionIndex].answer){
             this.correctAnswers++;
             return true;
         }
-        else{
-            return false;
-        }
     }
+
     hasEnded(){
         if (this.currentQuestionIndex >= this.questions.length){
             return true;
@@ -39,5 +37,21 @@ class Quiz {
             return false;
         }
     }
+    filterQuestionsByDifficulty(difficulty){
+        if (typeof difficulty !== 'number'|| difficulty < 1 || difficulty > 3){
+            return 
+        }
+        else{
+            return this.questions= this.questions.filter(question => question.difficulty === difficulty);
+        }
+    }
+
+    averageDifficulty(){
+        const totalDifficlty= this.questions.reduce(function(acc, question){
+            return acc + question.difficulty;
+        },0)
+        const averageDifficulty = totalDifficlty / this.questions.length;
+        return averageDifficulty;
 }
 
+}
